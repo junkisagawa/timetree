@@ -6,8 +6,8 @@
       <el-menu-item index="1">ポータルTOP</el-menu-item>
       <el-menu-item index="2" disabled>データ様向け</el-menu-item>
       <el-submenu index="3">
-        <template slot="title">アカウント</template>ß
-        <el-menu-item index="2-1">アカウント情報</el-menu-item>
+        <template slot="title">アカウント</template>
+        <el-menu-item index="2-1">{{userId}}</el-menu-item>
         <el-menu-item index="2-2"><a href="/"></a>ログアウト</el-menu-item>
       </el-submenu>
       </el-menu>
@@ -23,56 +23,58 @@
           <el-breadcrumb-item>promotion detail</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-    </div>
+ 
+      <div class="section1">
+        <h2 style="text-decoration: underline;">お客様におすすめのがん保険</h2>
+        <el-button id="announce-delete" type="primary"
+        @click="updateCancerInsurance()">Update</el-button>
+        <el-table
+          ref='multipleTable'
+          :data='inssuranceData'
+          border>
+          <el-table-column v-for='(item) in insuranceFieldInfo'
+            :key='item.key'
+            :label='item.label'
+            :prop='item.key'
+            :width='item.width'>
+          </el-table-column>
+        </el-table>
+      </div>
 
-    <div class="section1">
-      <h2 style="text-decoration: underline;">お客様におすすめのがん保険</h2>
-      <el-button id="announce-delete" type="primary"
-      @click="updateCancerInsurance()">Update</el-button>
-      <el-table
-        ref='multipleTable'
-        :data='inssuranceData'
-        border>
-        <el-table-column v-for='(item) in insuranceFieldInfo'
-          :key='item.key'
-          :label='item.label'
-          :prop='item.key'
-          :width='item.width'>
-        </el-table-column>
-      </el-table>
-    </div>
+      <b-container>
+        <b-tabs pills id="annoucement-tabs"
+        v-model="tabIndex">
+        <!-- ANNOUNCEMENT LIST -->
+        <!-- <b-container v-loading="screenLoading"> -->
+        <b-tab
+        title="生命保険">
+        <b-container class="border-top border-left border-right border-bottom">
+          <b-row>
+    
+          </b-row>
+        </b-container>
+        </b-tab>
 
-    <b-container>
-      <b-tabs pills id="annoucement-tabs"
-      v-model="tabIndex">
-      <!-- ANNOUNCEMENT LIST -->
-      <!-- <b-container v-loading="screenLoading"> -->
-      <b-tab
-      title="生命保険">
-      <b-container class="border-top border-left border-right border-bottom">
-        <b-row>
-  
-        </b-row>
+      <!-- WEATHER INFORMATION -->
+        <b-tab
+        title="学資保険">
+        <b-container class="border-top border-left border-right border-bottom">
+          <b-row>
+          
+          </b-row>
+        </b-container>
+       </b-tab>
+      </b-tabs>
       </b-container>
-    </b-tab>
-
-    <!-- WEATHER INFORMATION -->
-    <b-tab
-    title="学資保険">
-    <b-container class="border-top border-left border-right border-bottom">
-      <b-row>
-       
-      </b-row>
-    </b-container>
-  </b-tab>
-</b-tabs>
-</b-container>
+    </div>
+    
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import TopImage from "@/assets/family.png";
+import store from '../store/index.js';
 const headers = { 'Content-Type': 'application/json; charset=utf-8'} //TODO: get key when authorize
 let url = '/api/cancer'
 let image1 = require('@/assets/logo.png')
@@ -135,9 +137,18 @@ data () {
         // this.loading = false;
       })
     },
+  beforeRouteEnter: function (to, from, next) {
+    console.log("ふふふ").bind(this)
+    this.updateCancerInsurance();
+  },
   created: function () {
     this.updateCancerInsurance();
   }
+  },
+  computed: {
+      userId () {
+          return store.state.userId
+      }
   }
 
 }

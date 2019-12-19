@@ -19,30 +19,31 @@ router.get('/cancer', function(req, res) {
     })
   })
 
-router.post('/cancer', function(req,res,next){
-    res.json({
-        name:"test"
-    })
+//TODO : 1
+///lifeでリクエストを受け取ったら、Life生命のAPIにリクエストを投げ結果を整形してクライアントに返す
+router.get('/life', function(req,res,next){
+
+    //node.jsサーバーからリクエストを投げるにはどうするか
+
+    //受け取った結果をクライアントが想定している形に整形して返す
 })
 
-  router.post('/login', function(req, res,next) {
+router.post('/login', function(req, res,next) {
     let name = req.body.name
-    console.log(req)
+    console.log(req.body.name)
     if (usersInfo[name]) {
         if (req.body.password == usersInfo[name]) {
-            res.json({
-                flag:true,
-                userInfo: "saitama"
-            }) 
+            
+            res.json({ flag:true, userInfo: "saitama"}) 
+        
         } else {
-            res.json({
-                flag:false
-            })
+
+            res.json({ flag:false})
+        
         }
     } else {
-        res.json({
-            flag:false
-        })
+        res.json({ flag:false})
     }
   })
+
 module.exports = router;

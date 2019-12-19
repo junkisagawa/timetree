@@ -1,15 +1,12 @@
 <template>
   <div id="login">
-    <b-navbar toggleable="md" type="dark" variant="danger" style="background-color:#5596e6!important">
-      <b-navbar-brand>SGROL Administration tool</b-navbar-brand>
-    </b-navbar>
     <div id="announcement-form">
-      <label id="title-label">ログインする</label>
       <b-form>
-        <div id="login-name">
-          <el-input placeholder="ユーザー名" required></el-input>
-          <el-input placeholder="パスワード" required></el-input>
-          <el-button type="primary" @click="didTappedLoginButton()">ログイン</el-button>
+        <div id="login-info">
+          <label id="err">{{err}}</label>
+          <el-input placeholder="ユーザー名" required v-model="name"></el-input>
+          <el-input placeholder="パスワード" required v-model="password"></el-input>
+          <el-button type="success" @click="didTappedLoginButton()" :disabled="!isFormWritten">ログイン</el-button>
           <!-- 
             :disabled="!name/pass"と--@click="submitAnnouncement()を追加
             --> 
@@ -20,47 +17,75 @@
 </template>
 
 <script>
+import store from '../store/index.js'
+import axios from 'axios'
+const headers = { 'Content-Type': 'application/json; charset=utf-8'} //TODO: get key when authorize
+
 export default {
   name: 'LOGIN',
   data () {
     return {
-      email: '',
-      password: ''
+      name: '',
+      password: '',
+      err: 'Node.js研修第二回ポータルにログインする'
     }
   },
   methods: {
     didTappedLoginButton () {
       console.log("ログイン処理")
-      this.$router.push('/main')
-      // this.$store.dispatch(
-      //   'auth/create',
-      //   {
-      //     'user': {
-      //       email: this.email,
-      //       password: this.password
-      //     }
-      //   }
-      // )
+      axios.post('/api/login',
+        {
+          name: this.name, password:this.password
+      })
+      .then(res => {
+        console.log('Login Start');
+        if (res.flag) {
+        this.$store.commit('setUserId','this.name')
+        this.$router.push('/main')
+        } else {
+          this.err = 'ユーザー名/Passwordが間違っています'
+        }
+      })
+      .catch(error => {
+        console.log('get cancer:', error);
+        //this.openModal('warning', 'cannot load info.' + error)
+        // this.loading = false;
+        this.err = "名前/Passwordが間違っています"
+      })
     }
   },
   computed: {
-    isValidated () {
-      return Object.keys(this.fields).every(k => this.fields[k].validated) &&
-        Object.keys(this.fields).every(k => this.fields[k].valid)
-    },
-    token () {
-      return this.$store.state.auth.token
+      userId () {
+          return store.state.userId
+      },
+      isFormWritten () {
+        if (
+        this.name !== "" && this.password !==""
+      ) {
+        return true
+      } else {
+        return false
+      }
     }
   }
-  // created: function () {
-  //   // already logined
-  //   if (this.$store.state.auth.token) {
-  //     this.$router.push('/')
-  //   }
-  // },
-  // watch: {
-  //   token (newToken) {
-  //     this.$router.push('/')
-  //   }
-  }
+}
 </script>
+<style scoped>
+  .el-input{
+    padding:1em 0;
+  }
+  #login-info{
+    width: 70%;
+    position: absolute;
+    padding: 20px;
+    top:  0;
+    bottom:  0;
+    left:  0;
+    right:  0;
+    margin:  auto;     
+  }
+  .el-button{
+    width:100%;
+    margin: 1em 0;
+  }
+</style>

@@ -3,18 +3,24 @@ import Vuex from 'vuex'
 
 import createPersistedState from 'vuex-persistedstate'
 
-import auth from '@/store/modules/auth'
-import http from '@/store/modules/http'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  modules: {
-    auth,
-    http
+  state: {
+    userId:"test",
   },
-  plugins: [createPersistedState({
-    key: 'example',
-    storage: window.sessionStorage
-  })]
+  mutations: {
+    setUserId (state, id) {
+      state.userId = id
+    },
+  },
+  getters: {
+    getUserId: state => {
+      return state.userId
+    },
+  },
+  actions: {
+    
+  }
 })
