@@ -39,8 +39,9 @@ export default {
       })
       .then(res => {
         console.log('Login Start');
-        if (res.flag) {
-        this.$store.commit('setUserId','this.name')
+        console.log(res)
+        if (res.data.flag) {
+        this.$store.commit('setUserId',this.name)
         this.$router.push('/main')
         } else {
           this.err = 'ユーザー名/Passwordが間違っています'
