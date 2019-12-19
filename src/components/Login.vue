@@ -72,7 +72,7 @@ export default {
 </script>
 <style scoped>
   .el-input{
-    padding:1em 0;
+    padding:0.5em 0;
   }
   #login-info{
     width: 70%;
