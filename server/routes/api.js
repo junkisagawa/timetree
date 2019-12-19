@@ -1,9 +1,11 @@
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
 let usersInfo = {
     "sagawa":123,
     "tanaka":456
 }
+const userType = []
+
 //前回とおなじプロファイルのAPI/
 router.get('/profile', function(req, res, next) {
   res.json({ 
@@ -23,11 +25,11 @@ router.get('/cancer', function(req, res) {
 ///lifeでリクエストを受け取ったら、Life生命のAPIにリクエストを投げ結果を整形してクライアントに返す
 router.get('/life', function(req,res,next){
 
-    //node.jsサーバーからリクエストを投げるにはどうするか
-
+    //axiosを使用してNode.jsから外にリクエストをしてみましょう
     //受け取った結果をクライアントが想定している形に整形して返す
 })
 
+//TODO : 1
 router.post('/login', function(req, res,next) {
     let name = req.body.name
     console.log(req.body.name)
@@ -47,3 +49,25 @@ router.post('/login', function(req, res,next) {
   })
 
 module.exports = router;
+
+
+/// Answer (一例)
+/* TODO
+router.post('/login', function(req, res,next) {
+    let name = req.body.name
+    console.log(req.body.name)
+    if (usersInfo[name]) {
+        if (req.body.password == usersInfo[name]) {
+            
+            res.json({ flag:true, userInfo: "saitama"}) 
+        
+        } else {
+
+            res.json({ flag:false})
+        
+        }
+    } else {
+        res.json({ flag:false})
+    }
+  })
+  */
