@@ -42,7 +42,9 @@ export default {
         console.log(res)
         if (res.data.flag) {
         this.$store.commit('setUserId',this.name)
+        this.$store.commit('setBankType', res.data.userInfo)
         this.$router.push('/main')
+        console.log(store.state.bankType)
         } else {
           this.err = 'ユーザー名/Passwordが間違っています'
         }

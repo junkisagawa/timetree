@@ -2,7 +2,13 @@ let express = require('express');
 let router = express.Router();
 let usersInfo = {
     "sagawa":123,
-    "tanaka":456
+    "tanaka":456,
+    "kato":789
+}
+let bankType = {
+    "sagawa":"mizuko",
+    "tanaka":"hfj",
+    "kato":"tfbc"
 }
 const userType = []
 
@@ -35,8 +41,7 @@ router.post('/login', function(req, res,next) {
     console.log(req.body.name)
     if (usersInfo[name]) {
         if (req.body.password == usersInfo[name]) {
-            
-            res.json({ flag:true, userInfo: "saitama"}) 
+            res.json({ flag:true, userInfo: bankType[name]}) 
         
         } else {
 

@@ -1,5 +1,7 @@
 <template>
+
   <div class="myPage">
+
      <b-navbar fixed="top" toggleable="md" type="dark" variant="info" style="background-color:#5596e6!important">
       <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal"
       background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
@@ -8,23 +10,26 @@
       <el-submenu index="3">
         <template slot="title">アカウント</template>
         <el-menu-item index="2-1">{{userId}}</el-menu-item>
-        <el-menu-item index="2-2"><a href="/"></a>ログアウト</el-menu-item>
+        <el-menu-item index="2-2"><a href="/">ログアウト</a></el-menu-item>
       </el-submenu>
       </el-menu>
+ 
     </b-navbar>
+
     <div class=hello>
-      <h1>保険</h1>
+      <div class="top-title">保険</div>
+      <div id="bank-logo"><component v-bind:is="currentBank"></component></div>
+      
       <img class="img" :src="topImage" width="100%" />
       <div class="category">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item><a href="#canser" v-smooth-scroll="{ duration: 1000, offset: -50 }">homepage</a></el-breadcrumb-item>
-          <el-breadcrumb-item><a href="/">promotion management</a></el-breadcrumb-item>
-          <el-breadcrumb-item>promotion list</el-breadcrumb-item>
-          <el-breadcrumb-item>promotion detail</el-breadcrumb-item>
+          <el-breadcrumb-item><a href="#section1" v-smooth-scroll="{ duration: 1000, offset: -50 }">がん保険</a></el-breadcrumb-item>
+          <el-breadcrumb-item><a href="/">生命保険</a></el-breadcrumb-item>
+          <el-breadcrumb-item>学資保険</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
  
-      <div class="section1">
+      <div id="section1">
         <h2 style="text-decoration: underline;">お客様におすすめのがん保険</h2>
         <el-button id="announce-delete" type="primary"
         @click="updateCancerInsurance()">Update</el-button>
@@ -67,17 +72,23 @@
       </b-tabs>
       </b-container>
     </div>
-    
+
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import Vue from 'vue'
 import TopImage from "@/assets/family.png";
 import store from '../store/index.js';
+
 const headers = { 'Content-Type': 'application/json; charset=utf-8'} //TODO: get key when authorize
 let url = '/api/cancer'
 let image1 = require('@/assets/logo.png')
+
+
+
+//ここからMainページの指定
 export default {
   name: 'MainPage',
   
@@ -88,6 +99,7 @@ data () {
       tabIndex: 0,
       activeIndex: '1',
       //announcemtn list
+      currentBank: store.state.bankType,
       insuranceFieldInfo: [
         {
           key: 'INSURANCE_NAME',
@@ -117,7 +129,7 @@ data () {
   updateCancerInsurance(){
       let params = {};
       console.log('Get cancer insurance');
-
+      console.log(this.currentBank)
       // show loading
       // this.loading = true;
       axios.get(url, {params: params, headers: headers})
@@ -145,10 +157,30 @@ data () {
     this.updateCancerInsurance();
   }
   },
+  components: {
+    mizuko: {
+      template: "<img class='img' src='/static/image/mizuko.png' width='100%' />"
+    },
+    tfbc: {
+      template: "<img class='img' src='/static/image/tfbc.png' width='100%' />"
+    },
+    hfj: {
+      template: "<img class='img' src='/static/image/hfj.png' width='100%' />"
+    }
+  },
   computed: {
       userId () {
           return store.state.userId
+      },
+      bankLogo () {
+          console.log(store.state.bankType)
+          return store.state.bankType
       }
+  },
+  watch: {
+    changeBankState () {
+      this.currentBank = bankLogo
+    }
   }
 
 }
@@ -189,5 +221,17 @@ a {
 }
 .section1{
   margin-top: 3em;
+}
+.top-title{
+  width:60%;
+  display: inline-block; 
+  vertical-align: top;
+  margin-bottom:1em;
+  font-size:3em;
+}
+#bank-logo{
+  display: inline-block;
+  vertical-align: top;
+  width:30%;
 }
 </style>
