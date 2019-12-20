@@ -1,16 +1,34 @@
 let express = require('express');
 let router = express.Router();
-let usersInfo = {
+const usersInfo = {
     "sagawa":123,
     "tanaka":456,
     "kato":789
 }
-let bankType = {
+const bankType = {
     "sagawa":"mizuko",
     "tanaka":"hfj",
-    "ito":"tfbc"
+    "kato":"tfbc"
 }
-const userType = []
+
+const mizuko_cancer = {data:[
+        {"INSURANCE_NAME":"みずこ限定お試しパックスーパー","MONTHLY_COST":"3,000","DETAILE":"みずこユーザーへのお試しです"},
+        {"INSURANCE_NAME":"みずこ限定お試しパックスーパー","MONTHLY_COST":"3,000","DETAILE":"みずこユーザーへのお試しです"},
+        {"INSURANCE_NAME":"みずこ限定お試しパックスーパー","MONTHLY_COST":"3,000","DETAILE":"みずこユーザーへのお試しです"}
+    ]}
+
+const hfj_cancer = {data:[
+        {"INSURANCE_NAME":"HFJ限定すぺしゃるがん保険","MONTHLY_COST":"3,000","DETAILE":"HFJユーザーへのお試しです"},
+        {"INSURANCE_NAME":"HFJ限定ハイパーがん保険","MONTHLY_COST":"3,000","DETAILE":"HFJユーザーへのお試しです"},
+        {"INSURANCE_NAME":"HFJ限定スペシャルがん保険パック","MONTHLY_COST":"3,000","DETAILE":"HFJユーザーへのお試しです"}
+    ]}
+
+
+const tfbc_cancer = {data:[
+        {"INSURANCE_NAME":"TFBC限定お試しパックスーパー","MONTHLY_COST":"3,000","DETAILE":"TFBC様限定お試しです"},
+        {"INSURANCE_NAME":"TFBC限定お試しパックスーパー","MONTHLY_COST":"3,000","DETAILE":"TFBC様限定お試しです"},
+        {"INSURANCE_NAME":"TFBC限定お試しパックスーパー","MONTHLY_COST":"3,000","DETAILE":"TFBC様限定お試しです"}
+    ]}
 
 //前回とおなじプロファイルのAPI/サンプル
 router.get('/profile', function(req, res, next) {
@@ -39,20 +57,28 @@ router.post('/login', function(req, res,next) {
     }
   })
 
-
+//TODO : 2 /cancerでバンクタイプごとに異なるデータを返すAPIを実装
 router.get('/cancer', function(req, res) {
-    res.json({
-      "INSURANCE_NAME":"お試しパックスーパー","MONTHLY_COST":"3,000","DETAILE":"お試しです",
-    })
+    console.log(req.query.bank)
+    if (req.query.bank == "mizuko") {
+
+        console.log("みずこの保険を返します")
+        res.json(mizuko_cancer)
+
+    } else if (req.query.bank == "hfj"){
+
+        console.log("hfjの保険を返します")
+        res.json(hfj_cancer)
+
+    } else if (req.query.bank == "tfbc"){
+        
+        console.log("tfbcの保険を返します")
+        res.json(tfbc_cancer)
+
+    } else {
+        res.json({err:"バンクが存在しません"})
+    }
   })
-
-//TODO : Optional
-///lifeでリクエストを受け取ったら、Life生命のAPIにリクエストを投げ結果を整形してクライアントに返す
-router.get('/life', function(req,res,next){
-
-    //axiosを使用してNode.jsから外にリクエストをしてみましょう
-    //受け取った結果をクライアントが想定している形に整形して返す
-})
 
 
 module.exports = router;
