@@ -233,5 +233,6 @@ a {
   display: inline-block;
   vertical-align: top;
   width:30%;
+  text-align: right;
 }
 </style>
