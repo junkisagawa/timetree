@@ -40,45 +40,15 @@ router.get('/profile', function(req, res, next) {
 });
 
 //TODO : 1 /loginでPOSTリクエストを受け付けて、認証結果を返すAPIを実装
-router.post('/login', function(req, res,next) {
-    let name = req.body.name
-    console.log(req.body.name)
-    if (usersInfo[name]) {
-        if (req.body.password == usersInfo[name]) {
-            res.json({ flag:true, userInfo: bankType[name]}) 
-        
-        } else {
+//ヒント POSTを受け付ける場合はrouter.post
+//ヒント ユーザーからのデータはreq.bodyにある(たとえばreq.body.name)
 
-            res.json({ flag:false})
-        
-        }
-    } else {
-        res.json({ flag:false})
-    }
-  })
+
+
+
+
 
 //TODO : 2 /cancerでバンクタイプごとに異なるデータを返すAPIを実装
-router.get('/cancer', function(req, res) {
-    console.log(req.query.bank)
-    if (req.query.bank == "mizuko") {
-
-        console.log("みずこの保険を返します")
-        res.json(mizuko_cancer)
-
-    } else if (req.query.bank == "hfj"){
-
-        console.log("hfjの保険を返します")
-        res.json(hfj_cancer)
-
-    } else if (req.query.bank == "tfbc"){
-        
-        console.log("tfbcの保険を返します")
-        res.json(tfbc_cancer)
-
-    } else {
-        res.json({err:"バンクが存在しません"})
-    }
-  })
-
+//ヒント クエリパラメーターは、req.query.KEYで取得できる(今回のKEYはbankです)
 
 module.exports = router;
