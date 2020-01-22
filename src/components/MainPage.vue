@@ -89,7 +89,7 @@ import TopImage from "@/assets/family.png";
 import store from '../store/index.js';
 
 const headers = { 'Content-Type': 'application/json; charset=utf-8'} //TODO: get key when authorize
-let url = '/api/cancer'
+let url = '/api/cancer2'
 let image1 = require('@/assets/logo.png')
 
 

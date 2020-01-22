@@ -1,5 +1,6 @@
 let express = require('express');
 let router = express.Router();
+let axios = require("axios");
 const usersInfo = {
     "sagawa":123,
     "tanaka":456,
@@ -40,15 +41,65 @@ router.get('/profile', function(req, res, next) {
 });
 
 //TODO : 1 /loginでPOSTリクエストを受け付けて、認証結果を返すAPIを実装
-//ヒント POSTを受け付ける場合はrouter.post
-//ヒント ユーザーからのデータはreq.bodyにある(たとえばreq.body.name)
+router.post('/login', function(req, res,next) {
+    let name = req.body.name
+    console.log(req.body.name)
+    if (usersInfo[name]) {
+        if (req.body.password == usersInfo[name]) {
+            res.json({ flag:true, userInfo: bankType[name]}) 
+        
+        } else {
 
-
-
-
-
+            res.json({ flag:false})
+        
+        }
+    } else {
+        res.json({ flag:false})
+    }
+  })
 
 //TODO : 2 /cancerでバンクタイプごとに異なるデータを返すAPIを実装
-//ヒント クエリパラメーターは、req.query.KEYで取得できる(今回のKEYはbankです)
+//今回は使いません
+router.get('/cancer', function(req, res) {
+    console.log(req.query.bank)
+    if (req.query.bank == "mizuko") {
+
+        console.log("みずこの保険を返します")
+        res.json(mizuko_cancer)
+
+    } else if (req.query.bank == "hfj"){
+
+        console.log("hfjの保険を返します")
+        res.json(hfj_cancer)
+
+    } else if (req.query.bank == "tfbc"){
+        
+        console.log("tfbcの保険を返します")
+        res.json(tfbc_cancer)
+
+    } else {
+        res.json({err:"バンクが存在しません"})
+    }
+  })
+
+//NEW
+//TODO3 : リクエストを受付、APICに通信、レスポンスをそのままクライアントに返す
+router.get('/cancer2', function(req, res, next) {
+    let self = this
+    let url = 'ご自身のURL' + '?bank=' + req.query.bank
+    let headers = { 
+    accept: 'application/json',
+    'x-ibm-client-id': 'ご自身のクライアントID' 
+    }
+    axios.get(url, {headers: headers})
+     .then(function(response) {
+        console.log(response.data)
+        res.json(response.data)
+    })
+    .catch(function(err){
+        console.log(err)
+        res.json(err)
+    })
+})
 
 module.exports = router;

@@ -1,7 +1,7 @@
 applications:
 - disk_quota: 512M
-  host: sagawa-sampleportal
-  name: sagawa-sampleportal
+  host: sagawa3-sampleportal
+  name: sagawa3-sampleportal
   path: .
   domain: mybluemix.net
   instances: 1
