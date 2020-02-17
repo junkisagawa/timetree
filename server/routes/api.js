@@ -5,8 +5,8 @@ const router = express.Router()
 const fetch = require('node-fetch')
 const qs = require('querystring')
 const cors = require('cors')
-const client_id = process.env.CLIENT_ID
-const client_secret = process.env.CLIENT_SECRET
+const client_id = "s97FGD6lSrr6uFet2-77DHVs_FiRdT4jauKhsJMt3wk"
+const client_secret = "pxL9o3h9MAkgxoqzSfSI1pvd24fqt-fOULtzpXTtK6U"
 const redirect_uri = 'http://localhost:3000/api/oauth2callback'
 const response_type = 'code'
 const auth_uri = 'http://timetreeapp.com/oauth/authorize'
@@ -15,7 +15,7 @@ const state = Math.random().toString(36).slice(-8);
 const timetree_url = 'https://timetreeapis.com'
 
 //開発用の固定アクセスKEY
-let access_key = process.env.ACCESS_KEY
+let access_key = ""
 
 //初回連携時に認証を行うAPI
 router.get('/timetree', (req, res) => {
@@ -113,7 +113,7 @@ router.post('/timetree/event', (req, res, next) => {
                 "start_timezone": "UTC",
                 "end_at": req.body.endTime,
                 "end_timezone": "UTC",
-                "description": "te",
+                "description": "ご請求額：50,000円",
                 "location": "Tokyo",
                 "url": "https://example.com"
             },
