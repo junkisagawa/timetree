@@ -1,21 +1,28 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '@/components/Login'
-import MainPage from '@/components/mainpage'
+import MainPage from '../components/MainPage.vue'
+import Calender from '../components/Calender.vue'
+import External from '../components/External.vue'
 
 Vue.use(Router)
+
 
 export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Login',
-      component: Login
+      name: 'orico',
+      component: MainPage
     },
     {
-      path: '/main',
-      name: 'Main',
-      component: MainPage
+      path: '/external',
+      name: 'external',
+      component: External
+    },
+    {
+      path: '/calender',
+      name: 'calender',
+      component: Calender
     }
   ]
 })

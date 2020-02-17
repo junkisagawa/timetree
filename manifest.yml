@@ -1,7 +1,7 @@
 applications:
 - disk_quota: 512M
-  host: sagawa3-sampleportal
-  name: sagawa3-sampleportal
+  host: timetree-portal
+  name: timetree-portal
   path: .
   domain: mybluemix.net
   instances: 1

@@ -8,25 +8,17 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    userId:"test",
-    bankType: "hfj"
+    userKey:"",
   },
   mutations: {
-    setUserId (state, id) {
-      state.userId = id
+    setUserKey (state, id) {
+      state.userKey = id
       console.log("ユーザー変更")
-    },
-    setBankType (state, type) {
-      console.log("バンク変更")
-      state.bankType = type
     },
   },
   getters: {
-    getUserId: state => {
-      return state.userId
-    },
-    getBankType: state => {
-      return state.bankType
+    getUserKey: state => {
+      return state.userKey
     },
   },
   actions: {
