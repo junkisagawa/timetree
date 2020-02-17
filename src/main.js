@@ -20,8 +20,6 @@ Vue.use(vueSmoothScroll);
 Vue.use(VueMaterial)
 Vue.use(ElementUI)
 Vue.config.productionTip = false
-Vue.component('slide', Slide)
-Vue.component('burger-menu', Menu)
 
 new Vue({
   router, //追加
